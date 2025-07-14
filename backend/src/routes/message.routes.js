@@ -1,10 +1,10 @@
 import express from "express";
-import { 
+import {
   sendNewMessage,
   getMessageById,
   getUnreadMessageCount,
   getUsersList,
-  markMessagesAsRead
+  markMessagesAsRead,
 } from "../controllers/message.controller.js";
 import { protectRoute } from "../middleware/auth.middleware.js";
 
