@@ -29,15 +29,28 @@ app.use(
 );
 
 // Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/message", messageRoutes);
+try {
+  app.use("/api/auth", authRoutes);
+  console.log("Loaded authRoutes ✅");
+} catch (err) {
+  console.error("❌ Error loading authRoutes:", err);
+}
+
+try {
+  app.use("/api/message", messageRoutes);
+  console.log("Loaded messageRoutes ✅");
+} catch (err) {
+  console.error("❌ Error loading messageRoutes:", err);
+}
 
 // Serve static files in production
-if(process.env.NODE_ENV === "production"){
-    app.use(express.static(path.join(__dirname, "../frontend/dist")));
-    app.get("*", (req, res) => {
-        res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
-    });
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+  // Catch-all non-API route for SPA fallback
+  app.get(/^\/(?!api).*/, (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"));
+  });
 }
 
 // Connect to database first

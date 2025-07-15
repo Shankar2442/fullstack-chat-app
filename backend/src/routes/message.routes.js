@@ -12,9 +12,9 @@ const router = express.Router();
 
 // Get messages between two users
 router.get("/", protectRoute, getUsersList);
-router.get("/:id", protectRoute, getMessageById);
 router.post("/send/:id", protectRoute, sendNewMessage);
 router.get("/unread/:id", protectRoute, getUnreadMessageCount);
 router.patch("/read/:id", protectRoute, markMessagesAsRead);
+router.get("/:id", protectRoute, getMessageById);
 
 export default router;
